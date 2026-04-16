@@ -1,0 +1,18 @@
+<section class="carrito-container">
+  <h1>Productos agregados al carrito</h1>
+
+  <div class="lista-productos">
+    <article class="item-carrito" *ngFor="let producto of productosAgregados">
+      <h3>{{ producto.nombre }}</h3>
+      <p>Cantidad: {{ producto.cantidad }}</p>
+      <p>Precio unitario: ${{ producto.precio }}</p>
+    </article>
+  </div>
+
+  <p class="total">Total: ${{ total }}</p>
+
+  <div class="acciones">
+    <button type="button" routerLink="/home">Seguir comprando</button>
+    <button type="button" class="btn-pagar" routerLink="/pasarela">Ir a pasarela de pago</button>
+  </div>
+</section>

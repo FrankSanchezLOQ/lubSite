@@ -1,0 +1,23 @@
+<section class="pasarela-container">
+  <h1>Pasarela de pago</h1>
+  <p>Completa los datos para finalizar tu compra.</p>
+
+  <form class="pasarela-form">
+    <label for="nombreTitular">Nombre del titular</label>
+    <input id="nombreTitular" name="nombreTitular" [(ngModel)]="nombreTitular" />
+
+    <label for="numeroTarjeta">Numero de tarjeta</label>
+    <input id="numeroTarjeta" name="numeroTarjeta" [(ngModel)]="numeroTarjeta" />
+
+    <label for="fechaVencimiento">Fecha de vencimiento (MM/AA)</label>
+    <input id="fechaVencimiento" name="fechaVencimiento" [(ngModel)]="fechaVencimiento" />
+
+    <label for="cvv">CVV</label>
+    <input id="cvv" name="cvv" [(ngModel)]="cvv" />
+
+    <div class="acciones">
+      <button type="button" routerLink="/carrito">Volver al carrito</button>
+      <button type="submit" class="btn-finalizar">Finalizar pago</button>
+    </div>
+  </form>
+</section>
