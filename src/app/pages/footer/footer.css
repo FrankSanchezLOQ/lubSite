@@ -36,6 +36,7 @@
         color: #ccc;
         text-decoration: none;
         transition: 0.3s;
+        cursor: pointer;
         }
 
             .footer-links a:hover {

@@ -1,0 +1,6 @@
+<p>catalogo works! {{ categoria }} </p>
+<p>Marca: {{ marca }}</p>
+<app-catalogo-aceites 
+  *ngIf="categoria === 'aceites'"
+  [marca]="marca">
+</app-catalogo-aceites>

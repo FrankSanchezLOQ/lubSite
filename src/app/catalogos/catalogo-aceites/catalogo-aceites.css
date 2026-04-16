@@ -1,0 +1,62 @@
+/* TITULO */
+.titulo {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* GRID */
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.producto-card {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* HOVER */
+.producto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+/* IMAGEN */
+.producto-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* TEXTO */
+.producto-card h4 {
+  margin: 10px 0 5px;
+}
+
+.tipo {
+  color: #666;
+  font-size: 14px;
+}
+
+/* BOTON */
+.btn {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: none;
+  background: #f5c518;
+  color: black;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #d4a90f;
+}
