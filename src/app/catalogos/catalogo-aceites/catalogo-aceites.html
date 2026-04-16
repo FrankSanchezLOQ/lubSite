@@ -1,12 +1,21 @@
 <p class="titulo">Aceites - {{ marca | titlecase }}</p>
 
-<div class="grid-productos">
-  <div *ngFor="let producto of productos" class="producto-card">
+<!-- MENSAJE SIN PRODUCTOS -->
+<div *ngIf="productosFiltradosLista.length === 0" class="no-productos">
+  <p>No se encontraron productos con esos filtros</p>
+</div>
+
+<!-- GRID DE PRODUCTOS -->
+<div *ngIf="productosFiltradosLista.length > 0" class="grid-productos">
+  <div *ngFor="let producto of productosFiltradosLista" class="producto-card">
     
     <img [src]="producto.imagen" [alt]="producto.nombre">
 
     <h4>{{ producto.nombre }}</h4>
+    
     <p class="tipo">{{ producto.tipo }}</p>
+    
+    <p class="ref">Ref: {{ producto.referencia }}</p>
 
     <button class="btn">Ver detalles</button>
 

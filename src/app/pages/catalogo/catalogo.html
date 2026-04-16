@@ -1,6 +1,46 @@
-<p>catalogo works! {{ categoria }} </p>
-<p>Marca: {{ marca }}</p>
-<app-catalogo-aceites 
-  *ngIf="categoria === 'aceites'"
-  [marca]="marca">
-</app-catalogo-aceites>
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h3>Filtros</h3>
+
+    <label>Tipo de vehículo</label>
+    <select [(ngModel)]="tipoSeleccionado" (change)="onFiltroChange()">
+      <option value="">Todos</option>
+      <option value="Moto">Moto</option>
+      <option value="Carro">Carro</option>
+    </select>
+
+    <!-- REFERENCIA -->
+    <label>Referencia</label>
+    <select [(ngModel)]="referenciaSeleccionada" (change)="onFiltroChange()">
+      <option value="">Todas</option>
+      <option *ngFor="let ref of referenciasDisponibles" [value]="ref">
+        {{ ref }}
+      </option>
+    </select>
+
+    <button class="btn-limpiar" (click)="limpiarFiltros()">
+      Limpiar filtros
+    </button>
+  </aside>
+
+  <!-- CONTENIDO -->
+  <section class="contenido">
+
+    <h2>{{ categoria | titlecase }} - {{ marca | titlecase }}</h2>
+
+    <!-- 🔥 CONTADOR (AQUI VA) -->
+    <p class="resultados">
+      {{ totalProductos }} productos encontrados
+    </p>
+
+    <app-catalogo-aceites 
+      *ngIf="categoria === 'aceites'"
+      [marca]="marca"
+      [tipo]="tipoSeleccionado"
+      [referencia]="referenciaSeleccionada"
+      (productosFiltrados)="totalProductos = $event">
+    </app-catalogo-aceites>
+  </section>
+
+</div>

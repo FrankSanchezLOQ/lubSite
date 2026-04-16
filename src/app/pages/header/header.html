@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <header class="navbar">
-        <div class="logo">SanchezLubricantes</div>
+<header class="navbar">
+    <div class="logo">SanchezLubricantes</div>
+    
+    <div class="right-section">
 
-        <nav>
-            <ul>
-                <a routerLink="/">Inicio</a>
-                <a routerLink="productos">Productos</a>
-                <a routerLink="contactanos">Contactanos</a>
-            </ul>
+        <nav [class.active]="menuAbierto" class="nav-links">
+            <a routerLink="/" (click)="cerrarMenu()">Inicio</a>
+            <a routerLink="productos" (click)="cerrarMenu()">Productos</a>
+            <a routerLink="contactanos" (click)="cerrarMenu()">Contactanos</a>
         </nav>
-    </header>
-</body>
-</html>
+
+        <div class="icons">
+            <i class="fas fa-shopping-cart cart-icon"></i>
+            <i class="fas fa-bars menu-icon" (click)="toggleMenu()"></i>
+        </div>
+
+    </div>
+</header>

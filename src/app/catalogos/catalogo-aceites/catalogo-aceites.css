@@ -60,3 +60,15 @@
 .btn:hover {
   background: #d4a90f;
 }
+
+.ref {
+  font-size: 13px;
+  color: #888;
+}
+
+.no-productos {
+  text-align: center;
+  margin-top: 40px;
+  color: #777;
+  font-size: 16px;
+}
