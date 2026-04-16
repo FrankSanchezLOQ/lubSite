@@ -1,2 +1,77 @@
-<p>Contactanos</p>
-<a href="home.html">volver</a>
+<section class="contactanos">
+
+  <header class="header">
+    <h1>Contáctenos</h1>
+    <p>Más de 20 años acompañando el cuidado y rendimiento de tu vehículo, con atención directa en Neiva y Florencia.</p>
+  </header>
+
+  <div class="sedes">
+
+    <!-- SEDE NEIVA -->
+    <div class="sede">
+        <div class="foto-sede">
+            <img src="/Neiva.png" alt="Sanchez Lubricantes Neiva">
+        </div>
+      <h2>Sede Neiva</h2>
+      <p class="descripcion-sede">
+        Punto principal de atención, asesoría especializada y lubricantes originales.
+      </p>
+      <p><strong>📍  Dirección:</strong> Carrera 7 No 1 Sur</p>
+      <p><strong>📞 Teléfono:</strong> 313 488 1239</p>
+      <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249.03935320448946!2d-75.28508476134176!3d2.9223762757714207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3b7479b1ad532b%3A0x5525ddc49137e344!2sS%C3%A1nchez%20Lubricantes%20Neiva!5e0!3m2!1ses!2sco!4v1776372509018!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    </div>
+
+    <!-- SEDE FLORENCIA -->
+    <div class="sede">
+        <div class="foto-sede">
+            <img src="/Florencia.png" alt="Sanchez Lubricantes Florencia">
+        </div>
+      <h2>Sede Florencia</h2>    
+      <p class="descripcion-sede">
+        Atención local con productos certificados y respaldo profesional.
+      </p>
+      <p><strong>📍  Dirección:</strong> Cl 17 9-05</p>
+      <p><strong>📞 Teléfono:</strong> +57 313 488 1239</p>
+
+      <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249.264253890822!2d-75.61192537391534!3d1.6177421572844632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e244e048b5d7cf5%3A0xa9b0a871d5c912bc!2sCl.%2017%20%23%209-5%2C%20Florencia%2C%20Caquet%C3%A1!5e0!3m2!1ses!2sco!4v1776372568776!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    </div>
+
+  </div>
+
+
+<div class="formulario">
+  <h3>Escríbenos</h3>
+  <p class="form-desc">
+    ¿Tienes preguntas sobre productos, disponibilidad o precios?  
+    Déjanos tu mensaje y te contactaremos lo antes posible.
+  </p>
+
+  <form (ngSubmit)="enviarFormulario()" #contactForm="ngForm">
+
+    <div class="campo">
+      <label>Nombre</label>
+      <input type="text" name="nombre" ngModel required>
+    </div>
+
+    <div class="campo">
+      <label>Correo electrónico</label>
+      <input type="email" name="correo" ngModel required>
+    </div>
+
+    <div class="campo">
+      <label>Mensaje</label>
+      <textarea name="mensaje" ngModel required></textarea>
+    </div>
+
+    <button type="submit">Enviar mensaje</button>
+    <p class="nota">También puedes contactarnos directamente por WhatsApp o teléfono.</p>
+
+  </form>
+</div>
+
+
+</section>

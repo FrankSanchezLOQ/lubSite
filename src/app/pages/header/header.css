@@ -9,13 +9,34 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  font-family: 'Montserrat', system-ui, sans-serif;
 }
 
 /* LOGO */
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 20px;
   font-weight: bold;
 }
+
+
+.logo img {
+  height: 80px; /* controla el tamaño del logo */
+  width: auto;
+}
+
+
+.logo span {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 
 /* AGRUPA NAV + ICONOS */
 .right-section {
@@ -91,5 +112,12 @@
   /* ESPACIADO LINKS */
   .nav-links a {
     padding: 10px 0;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .logo span {
+    display: none;
   }
 }
