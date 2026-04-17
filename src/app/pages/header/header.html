@@ -1,14 +1,22 @@
 <header class="navbar">
-  <div class="logo">SanchezLubricantes</div>
+  <div class="logo">
+    <img src="/Logo.png" alt="Sanchez Lubricantes">
+    <span>SanchezLubricantes</span>
+  </div>
 
-  <nav class="navbar-links">
-    <a routerLink="/home">Inicio</a>
-    <a href="productos.html">Productos</a>
-    <a href="contactanos.html">Contactanos</a>
-  </nav>
+  <div class="right-section">
+    <nav [class.active]="menuAbierto" class="nav-links">
+      <a routerLink="/" (click)="cerrarMenu()">Inicio</a>
+      <a routerLink="/productos" (click)="cerrarMenu()">Productos</a>
+      <a routerLink="/contactanos" (click)="cerrarMenu()">Contactanos</a>
+      <a routerLink="/carrito" (click)="cerrarMenu()">Carrito</a>
+    </nav>
 
-  <a class="cart-link" routerLink="/carrito" aria-label="Ir al carrito">
-    <span class="cart-icon">🛒</span>
-    <span class="cart-text">Carrito</span>
-  </a>
+    <div class="icons">
+      <a class="cart-link" routerLink="/carrito" aria-label="Ir al carrito">
+        <i class="fas fa-shopping-cart cart-icon"></i>
+      </a>
+      <i class="fas fa-bars menu-icon" (click)="toggleMenu()"></i>
+    </div>
+  </div>
 </header>

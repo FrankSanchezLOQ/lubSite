@@ -1,46 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Aceites, filtros y grasas para tu vehículo</h1>
-      <p>Productos derivados de hidrocarburos</p>
+<section class="hero">
+  <div class="hero-content">
+    <h1>Aceites, filtros y grasas para tu vehículo</h1>
+    <p>Productos derivados de hidrocarburos</p>
 
-      <div class="buttons">
-        <button class="btn-primario">Ver Catálogo</button>
-        <button class="btn-secundario">Contactanos</button>
-      </div>
+    <div class="buttons">
+      <button class="btn-primario">Ver Catálogo</button>
+      <button class="btn-secundario" routerLink="/contactanos">Contáctenos</button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="productos">
-    <h2>Nuestros Catálogos de Productos</h2>
-    <p>Descubre nuestra amplia gama de productos para el mantenimiento de tu vehículo.</p>
+<section class="productos">
+  <h2>Nuestros Catálogos de Productos</h2>
+  <p>Descubre nuestra amplia gama de productos para el mantenimiento de tu vehículo.</p>
 
-    <h3>Multimarcas en Aceites</h3>
+  <hr>
+  <h3>Multimarcas en Aceites</h3>
 
-    <div class="productos-grid">
-      <div class="producto-card" *ngFor="let producto of productosAceites">
-        <img [src]="producto.imagen" [alt]="producto.nombre">
-        <!-- <h3>{{ producto.nombre }}</h3> -->
-        <button>Ver Catalogo</button>
-      </div>
+  <div class="productos-grid">
+    <div class="producto-card" *ngFor="let producto of productosAceites">
+      <img [src]="producto.imagen" [alt]="producto.nombre">
+      <!-- <h3>{{ producto.nombre }}</h3> -->
+      <button [routerLink]="['/catalogo', 'aceites', producto.nombre]">Ver Catalogo</button>
     </div>
+  </div>
 
-    <h3>Multimarcas en Filtros</h3>
+  <br>
+  <hr>
+  <h3>Multimarcas en Filtros</h3>
 
-    <div class="productos-grid">
-      <div class="producto-card" *ngFor="let producto of productosFiltros">
-        <img [src]="producto.imagen" [alt]="producto.nombre">
-        <!-- <h3>{{ producto.nombre }}</h3> -->
-        <button>Ver Catalogo</button>
-      </div>
+  <div class="productos-grid">
+    <div class="producto-card" *ngFor="let producto of productosFiltros">
+      <img [src]="producto.imagen" [alt]="producto.nombre">
+      <!-- <h3>{{ producto.nombre }}</h3> -->
+      <button [routerLink]="['/catalogo', 'filtros', producto.nombre]">Ver Catalogo</button>
     </div>
-  </section>
-</body>
-</html>
+  </div>
+
+  <br>
+  <hr>
+  <h3>Multimarcas en Grasas</h3>
+
+  <div class="productos-grid">
+    <div class="producto-card" *ngFor="let producto of productosGrasas">
+      <img [src]="producto.imagen" [alt]="producto.nombre">
+      <!-- <h3>{{ producto.nombre }}</h3> -->
+      <button [routerLink]="['/catalogo', 'grasas', producto.nombre]">Ver Catalogo</button>
+    </div>
+  </div>
+
+  <br>
+  <hr>
+  <h3>Multimarcas en Aditivos</h3>
+
+  <div class="productos-grid">
+    <div class="producto-card" *ngFor="let producto of productosAditivos">
+      <img [src]="producto.imagen" [alt]="producto.nombre">
+      <!-- <h3>{{ producto.nombre }}</h3> -->
+      <button [routerLink]="['/catalogo', 'aditivos', producto.nombre]">Ver Catalogo</button>
+    </div>
+  </div>
+
+  <br>
+  <hr>
+</section>

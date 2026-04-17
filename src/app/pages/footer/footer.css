@@ -36,6 +36,7 @@
         color: #ccc;
         text-decoration: none;
         transition: 0.3s;
+        cursor: pointer;
         }
 
             .footer-links a:hover {
@@ -96,3 +97,9 @@
             .instagram {
             background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
             }
+
+/* EMPUJA EL FOOTER ABAJO */
+:host {
+  display: block;
+  margin-top: auto;
+}

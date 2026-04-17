@@ -1,41 +1,134 @@
+/* HEADER */
 .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background: #7a7a7a;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: 'Montserrat', system-ui, sans-serif;
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+.logo img {
+  height: 80px; /* controla el tamaño del logo */
+  width: auto;
+}
+
+
+.logo span {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+
+/* AGRUPA NAV + ICONOS */
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* NAV DESKTOP */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+/* LINKS */
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+  font-size: 16px;
+}
+
+.nav-links a:hover {
+  color: #f5c518;
+}
+
+/* ICONOS */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* CARRITO */
+.cart-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* HAMBURGUESA */
+.menu-icon {
+  font-size: 22px;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  /* MOSTRAR ICONO HAMBURGUESA */
+  .menu-icon {
+    display: block;
+  }
+
+  /* OCULTAR MENU POR DEFECTO */
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: #7a7a7a;
+    flex-direction: column;
+    width: 220px;
+    padding: 20px;
+    display: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+
+  /* CUANDO ESTA ACTIVO */
+  .nav-links.active {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    background-color: #7a7a7a;
-    color: white;
+  }
+
+  /* ESPACIADO LINKS */
+  .nav-links a {
+    padding: 10px 0;
+  }
 }
 
-.navbar .logo {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.navbar nav a {
-    margin-left: 80px;
-    text-decoration: none;
-    color: white;
-    font-size: 24px;
-    font-weight: 500;
-}
-
-.navbar-links {
-    display: flex;
-    align-items: center;
-}
 
 .cart-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: white;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 600;
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
 }
 
 .cart-icon {
-    font-size: 28px;
-    line-height: 1;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .logo span {
+    display: none;
+  }
 }
