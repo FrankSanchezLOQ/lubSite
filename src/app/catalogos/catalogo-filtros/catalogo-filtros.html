@@ -1,0 +1,46 @@
+<div class="layout">
+
+  <!-- 🔵 SIDEBAR -->
+  <aside class="sidebar">
+
+    <h3>Filtros de vehículo</h3>
+
+    <!-- TIPO -->
+    <label>Tipo</label>
+    <select [(ngModel)]="tipoSeleccionado">
+      <option value="">Seleccione</option>
+      <option *ngFor="let t of tipos" [value]="t">{{ t }}</option>
+    </select>
+
+    <!-- MARCA -->
+    <label>Marca</label>
+    <select [(ngModel)]="marcaSeleccionada">
+      <option value="">Seleccione</option>
+      <option *ngFor="let m of marcasDisponibles" [value]="m">
+        {{ m }}
+      </option>
+    </select>
+
+    <!-- MODELO -->
+    <label>Modelo</label>
+    <select [(ngModel)]="modeloSeleccionado">
+      <option value="">Seleccione</option>
+      <option *ngFor="let m of modelosDisponibles" [value]="m">
+        {{ m }}
+      </option>
+    </select>
+
+  </aside>
+
+  <!-- 🟢 CONTENIDO -->
+  <section class="contenido">
+
+    <h2>Resultados</h2>
+
+    <p>Tipo: {{ tipoSeleccionado }}</p>
+    <p>Marca: {{ marcaSeleccionada }}</p>
+    <p>Modelo: {{ modeloSeleccionado }}</p>
+
+  </section>
+
+</div>

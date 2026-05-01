@@ -1,18 +1,87 @@
-/* TITULO */
-.titulo {
-  font-size: 24px;
-  margin-bottom: 20px;
+/* ===== LAYOUT GENERAL ===== */
+* {
+  box-sizing: border-box;
+}
+
+.layout {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 260px;
+  background: #f4f4f4;
+  padding: 20px;
+  border-radius: 12px;
+  height: fit-content;
+  position: sticky;
+  top: 80px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 👈 PRO */
+}
+
+.sidebar h3 {
+  margin-bottom: 15px;
+}
+
+.sidebar label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 12px;
   font-weight: bold;
 }
 
-/* GRID */
+.sidebar select {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.sidebar button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 8px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sidebar button:hover {
+  background: #555;
+}
+
+/* ===== CONTENIDO ===== */
+.contenido {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ===== TITULO ===== */
+.titulo {
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* ===== RESULTADOS ===== */
+.resultados {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* ===== GRID ===== */
 .grid-productos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 }
 
-/* CARD */
+/* ===== CARD ===== */
 .producto-card {
   background: white;
   border-radius: 12px;
@@ -22,20 +91,21 @@
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* HOVER */
 .producto-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.2);
 }
 
-/* IMAGEN */
+/* ===== IMAGEN ===== */
 .producto-card img {
   width: 100%;
+  /*height: 150px;*/
+  /*object-fit: contain;*/
   border-radius: 8px;
   margin-bottom: 10px;
 }
 
-/* TEXTO */
+/* ===== TEXTO ===== */
 .producto-card h4 {
   margin: 10px 0 5px;
 }
@@ -45,30 +115,91 @@
   font-size: 14px;
 }
 
-/* BOTON */
+.ref {
+  font-size: 13px;
+  color: #888;
+}
+
+/* ===== BOTON ===== */
 .btn {
   margin-top: 10px;
-  padding: 8px 12px;
+  padding: 10px;
   border: none;
   background: #f5c518;
   color: black;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: 0.3s;
+  /*width: 100%;*/
 }
 
 .btn:hover {
   background: #d4a90f;
 }
 
-.ref {
-  font-size: 13px;
-  color: #888;
-}
-
+/* ===== SIN PRODUCTOS ===== */
 .no-productos {
   text-align: center;
   margin-top: 40px;
   color: #777;
   font-size: 16px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+  .layout {
+    flex-direction: column;
+    padding: 15px; 
+  }
+
+  .sidebar {
+    width: 100%;
+    position: static;
+    margin-bottom: 20px;
+  }
+
+  .contenido {
+    width: 100%;
+    padding: 0;
+  }
+
+  .grid-productos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .titulo {
+    font-size: 35px;
+    text-align: center;
+  }
+
+  .resultados {
+    text-align: center;
+  }
+
+  .sidebar select {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .sidebar button {
+    padding: 12px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .grid-productos {
+    grid-template-columns: 1fr;
+  }
+
+  .titulo {
+    font-size: 20px;
+  }
+
+  .sidebar {
+    padding: 15px;
+  }
 }

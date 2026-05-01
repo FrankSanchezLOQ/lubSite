@@ -1,23 +1,54 @@
-<p class="titulo">Aceites - {{ marca | titlecase }}</p>
+<div class="layout">
 
-<!-- MENSAJE SIN PRODUCTOS -->
-<div *ngIf="productosFiltradosLista.length === 0" class="no-productos">
-  <p>No se encontraron productos con esos filtros</p>
-</div>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h3>Filtros</h3>
 
-<!-- GRID DE PRODUCTOS -->
-<div *ngIf="productosFiltradosLista.length > 0" class="grid-productos">
-  <div *ngFor="let producto of productosFiltradosLista" class="producto-card">
-    
-    <img [src]="producto.imagen" [alt]="producto.nombre">
+    <label>Tipo</label>
+    <select [(ngModel)]="tipo" (change)="filtrarProductos()">
+      <option value="">Todos</option>
+      <option value="Moto">Moto</option>
+      <option value="Carro">Carro</option>
+    </select>
 
-    <h4>{{ producto.nombre }}</h4>
-    
-    <p class="tipo">{{ producto.tipo }}</p>
-    
-    <p class="ref">Ref: {{ producto.referencia }}</p>
+    <label>Referencia</label>
+    <select [(ngModel)]="referencia" (change)="filtrarProductos()">
+      <option value="">Todas</option>
+      <option *ngFor="let ref of referenciasDisponibles" [value]="ref">
+        {{ ref }}
+      </option>
+    </select>
 
-    <button class="btn">Ver detalles</button>
+    <button (click)="limpiarFiltros()">Limpiar</button>
+  </aside>
 
-  </div>
+  <!-- CONTENIDO -->
+  <section class="contenido">
+
+    <p class="titulo">Aceites - {{ marca | titlecase }}</p>
+
+    <p class="resultados">
+      {{ productosFiltradosLista.length }} productos encontrados
+    </p>
+
+    <div *ngIf="productosFiltradosLista.length === 0" class="no-productos">
+      <p>No se encontraron productos</p>
+    </div>
+
+    <div *ngIf="productosFiltradosLista.length > 0" class="grid-productos">
+      <div *ngFor="let producto of productosFiltradosLista" class="producto-card">
+        
+        <img [src]="producto.imagen" [alt]="producto.nombre">
+
+        <h4>{{ producto.nombre }}</h4>
+        <p class="tipo">{{ producto.tipo }}</p>
+        <p class="ref">Ref: {{ producto.referencia }}</p>
+
+        <button class="btn">Ver detalles</button>
+
+      </div>
+    </div>
+
+  </section>
+
 </div>
