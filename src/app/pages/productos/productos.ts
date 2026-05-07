@@ -1,101 +1,30 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from "@angular/router";
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { CatalogoService } from '../../services/catalogo.service';
+import { Marca } from '../../models/producto.model';
 
 @Component({
   selector: 'app-productos',
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
   templateUrl: './productos.html',
   styleUrl: './productos.css',
 })
-
 export class Productos {
-  productosAceites = [
-    {
-      nombre: "Mobil",
-      imagen: "/mobil.jpg",
-    },
+  private catalogoService = inject(CatalogoService);
 
-    {
-      nombre: "Castrol",
-      imagen: "/castrol.jpg",
-    },
+  marcasAceites:  Marca[] = this.catalogoService.getMarcasPorCategoria('aceites');
+  marcasFiltros:  Marca[] = this.catalogoService.getMarcasPorCategoria('filtros');
+  marcasGrasas:   Marca[] = this.catalogoService.getMarcasPorCategoria('grasas');
+  marcasAditivos: Marca[] = this.catalogoService.getMarcasPorCategoria('aditivos');
 
-    {
-      nombre: "Shell",
-      imagen: "/shell.jpg",
-    },
-
-    {
-      nombre: "Total",
-      imagen: "/total.jpg",
-    },
+  categorias = [
+    { id: 'aceites',  label: 'Aceites' },
+    { id: 'filtros',  label: 'Filtros' },
+    { id: 'grasas',   label: 'Grasas' },
+    { id: 'aditivos', label: 'Aditivos' },
   ];
 
-  productosFiltros = [
-    {
-      nombre: "Tecnifil",
-      imagen: "/tecnifil.png",
-    },
-
-    {
-      nombre: "Baldwin",
-      imagen: "/baldwin.jpg",
-    },
-
-    {
-      nombre: "Donsson",
-      imagen: "/donsson.png",
-    },
-
-    {
-      nombre: "Donaldson",
-      imagen: "/donaldson.jpg",
-    }
-  ];
-
-  productosGrasas = [
-    {
-      nombre: "Superkote",
-      imagen: "/superkote.png",
-    },
-
-    {
-      nombre: "BEG",
-      imagen: "/beg.png",
-    },
-
-    {
-      nombre: "Special",
-      imagen: "/special.png",
-    },
-
-    {
-      nombre: "Motodo",
-      imagen: "/motodo.png",
-    }
-  ];
-
-  productosAditivos = [
-    {
-      nombre: "Molyven",
-      imagen: "/molyven.jpg",
-    },
-
-    {
-      nombre: "Simoniz",
-      imagen: "/simoniz.png",
-    },
-
-    {
-      nombre: "CRC",
-      imagen: "/crc.png",
-    },
-
-    {
-      nombre: "",
-      imagen: "",
-    }
-  ];
+  scrollTo(id: string): void {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
-

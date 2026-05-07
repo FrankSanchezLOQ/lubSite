@@ -1,21 +1,25 @@
 <header class="navbar">
   <div class="logo">
-    <img src="/Logo.png" alt="Sanchez Lubricantes">
+    <img src="/Logo.png" alt="Sánchez Lubricantes">
     <span>SanchezLubricantes</span>
   </div>
 
   <div class="right-section">
     <nav [class.active]="menuAbierto" class="nav-links">
-      <a routerLink="/" (click)="cerrarMenu()">Inicio</a>
-      <a routerLink="/productos" (click)="cerrarMenu()">Productos</a>
-      <a routerLink="/contactanos" (click)="cerrarMenu()">Contactanos</a>
+      <a routerLink="/"            routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }" (click)="cerrarMenu()">Inicio</a>
+      <a routerLink="/productos"   routerLinkActive="activo" (click)="cerrarMenu()">Productos</a>
+      <a routerLink="/contactanos" routerLinkActive="activo" (click)="cerrarMenu()">Contáctenos</a>
     </nav>
 
     <div class="icons">
+      <!-- Carrito con badge reactivo -->
       <a class="cart-link" routerLink="/carrito" aria-label="Ir al carrito">
         <i class="fas fa-shopping-cart cart-icon"></i>
+        @if (carritoService.conteo() > 0) {
+          <span class="cart-badge">{{ carritoService.conteo() }}</span>
+        }
       </a>
-      <i class="fas fa-bars menu-icon" (click)="toggleMenu()"></i>
+      <i class="fas fa-bars menu-icon" (click)="toggleMenu()" aria-label="Abrir menú"></i>
     </div>
   </div>
 </header>

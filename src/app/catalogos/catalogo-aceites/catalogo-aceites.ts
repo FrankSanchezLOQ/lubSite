@@ -1,85 +1,77 @@
-import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, OnChanges, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface Producto {
-  nombre: string;
-  tipo: string;
-  referencia: string;
-  imagen?: string;
-}
+import { TitleCasePipe } from '@angular/common';
+import { CatalogoService } from '../../services/catalogo.service';
+import { CarritoService } from '../../services/carrito.service';
+import { Producto, Presentacion } from '../../models/producto.model';
 
 @Component({
   selector: 'app-catalogo-aceites',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule, TitleCasePipe],
   templateUrl: './catalogo-aceites.html',
-  styleUrls: ['./catalogo-aceites.css'],
+  styleUrl: './catalogo-aceites.css',
 })
+export class CatalogoAceites implements OnChanges {
 
-export class CatalogoAceites implements OnChanges, OnInit {
+  @Input() marca = '';
 
-  @Input() marca: string = '';
+  private catalogoService = inject(CatalogoService);
+  carritoService          = inject(CarritoService);
 
-  tipo: string = '';
-  referencia: string = '';
+  filtroAplicacion = '';
+  filtroViscosidad = '';
+  filtroBase       = '';
 
-  @Output() productosFiltrados = new EventEmitter<number>();
+  private todosLosProductos: Producto[] = [];
+  productosFiltrados: Producto[]        = [];
+  agregadoId: number | null             = null;
 
-  productosFiltradosLista: Producto[] = [];
+  // Presentación seleccionada por producto (clave: id del producto)
+  presentacionSeleccionada: Record<number, Presentacion | null> = {};
 
-  productosPorMarca: Record<string, Producto[]> = {
-    mobil: [
-      { nombre: 'Mobil 20W50', tipo: 'Moto', referencia: '20w50', imagen: '/beg.png' },
-      { nombre: 'Mobil 10W30', tipo: 'Carro', referencia: '10w30', imagen: '/beg.png' }
-    ],
-    shell: [
-      { nombre: 'Shell 20W50', tipo: 'Moto', referencia: '20w50', imagen: '/beg.png' },
-      { nombre: 'Shell 5W30', tipo: 'Carro', referencia: '5w30', imagen: '/beg.png' }
-    ],
-    castrol: [
-      { nombre: 'Castrol 20W50', tipo: 'Moto', referencia: '20w50', imagen: '/beg.png' },
-      { nombre: 'Castrol 10W40', tipo: 'Carro', referencia: '10w40', imagen: '/beg.png' }
-    ],
-    total: [
-      { nombre: 'Total 20W50', tipo: 'Moto', referencia: '20w50', imagen: '/beg.png' },
-      { nombre: 'Total 10W40', tipo: 'Carro', referencia: '10w40', imagen: '/beg.png' }
-    ]
-  };
-
-  ngOnInit() {
-    this.filtrarProductos(); // ✅ carga inicial
+  ngOnChanges(): void {
+    this.todosLosProductos = this.catalogoService.getProductos('aceites', this.marca);
+    this.limpiarFiltros();
   }
 
-  ngOnChanges() {
-    this.filtrarProductos(); // ✅ cuando cambia marca
+  get viscosidadesDisponibles(): string[] {
+    const v = this.todosLosProductos.map(p => p.viscosidad ?? '').filter(Boolean);
+    return [...new Set(v)].sort();
   }
 
-  filtrarProductos() {
-    let productos: Producto[] =
-      this.productosPorMarca[this.marca?.toLowerCase()] || [];
-
-    if (this.tipo) {
-      productos = productos.filter(p => p.tipo === this.tipo);
-    }
-
-    if (this.referencia) {
-      productos = productos.filter(p => p.referencia === this.referencia);
-    }
-
-    this.productosFiltradosLista = productos;
-
-    this.productosFiltrados.emit(productos.length);
+  filtrar(): void {
+    this.productosFiltrados = this.todosLosProductos.filter(p => {
+      const porAplicacion = !this.filtroAplicacion || p.aplicacion === this.filtroAplicacion;
+      const porViscosidad = !this.filtroViscosidad || p.viscosidad === this.filtroViscosidad;
+      const porBase       = !this.filtroBase       || p.tipoBase   === this.filtroBase;
+      return porAplicacion && porViscosidad && porBase;
+    });
+    // Inicializar presentación por defecto (la primera) para cada producto
+    this.productosFiltrados.forEach(p => {
+      if (p.presentaciones.length > 0 && !this.presentacionSeleccionada[p.id]) {
+        this.presentacionSeleccionada[p.id] = p.presentaciones[0];
+      }
+    });
   }
 
-  get referenciasDisponibles() {
-    const refs = this.productosPorMarca[this.marca?.toLowerCase()] || [];
-    return [...new Set(refs.map(p => p.referencia))];
+  limpiarFiltros(): void {
+    this.filtroAplicacion = '';
+    this.filtroViscosidad = '';
+    this.filtroBase       = '';
+    this.presentacionSeleccionada = {};
+    this.filtrar();
   }
 
-  limpiarFiltros() {
-    this.tipo = '';
-    this.referencia = '';
-    this.filtrarProductos(); // ✅ MUY IMPORTANTE
+  // Precio a mostrar: el de la presentación seleccionada o el base
+  precioActual(producto: Producto): number {
+    const pres = this.presentacionSeleccionada[producto.id];
+    return pres ? pres.precio : producto.precio;
+  }
+
+  agregarAlCarrito(producto: Producto): void {
+    const presentacion = this.presentacionSeleccionada[producto.id] ?? null;
+    this.carritoService.agregar(producto, presentacion);
+    this.agregadoId = producto.id;
+    setTimeout(() => (this.agregadoId = null), 1500);
   }
 }

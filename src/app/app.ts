@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from "./pages/header/header";
 import { Footer } from "./pages/footer/footer";
@@ -10,5 +10,5 @@ import { Footer } from "./pages/footer/footer";
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('lubSite');
+  
 }

@@ -8,10 +8,10 @@ import { Pasarela } from './pages/pasarela/pasarela';
 
 export const routes: Routes = [
   { path: '', component: Home, pathMatch: 'full' },
-  { path: 'home', component: Home },
   { path: 'productos', component: Productos },
   { path: 'contactanos', component: Contactanos },
   { path: 'catalogo/:categoria/:marca', component: Catalogo },
   { path: 'carrito', component: Carrito },
   { path: 'pasarela', component: Pasarela },
+  { path: '**', redirectTo: '' },
 ];

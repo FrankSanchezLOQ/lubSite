@@ -1,46 +1,197 @@
 <div class="layout">
 
-  <!-- 🔵 SIDEBAR -->
   <aside class="sidebar">
+    <h3>Filtros — {{ marca | titlecase }}</h3>
+    <p class="sidebar-desc">Ingresa los datos de tu vehículo para ver los filtros compatibles.</p>
 
-    <h3>Filtros de vehículo</h3>
+    <div class="pasos">
+      <span class="paso" [class.activo]="idTipoSel"     [class.completo]="idTipoSel">1</span>
+      <span class="linea"></span>
+      <span class="paso" [class.activo]="idFabSel"      [class.completo]="idFabSel">2</span>
+      <span class="linea"></span>
+      <span class="paso" [class.activo]="modeloSel"     [class.completo]="modeloSel">3</span>
+      <span class="linea"></span>
+      <span class="paso" [class.activo]="anioSel"       [class.completo]="anioSel">4</span>
+      <span class="linea"></span>
+      <span class="paso" [class.activo]="cilindradaSel" [class.completo]="cilindradaSel">5</span>
+    </div>
 
-    <!-- TIPO -->
-    <label>Tipo</label>
-    <select [(ngModel)]="tipoSeleccionado">
-      <option value="">Seleccione</option>
-      <option *ngFor="let t of tipos" [value]="t">{{ t }}</option>
-    </select>
+    <!-- Paso 1: Tipo -->
+    <div class="campo">
+      <label for="tipo">1. Tipo de aplicación</label>
+      <select id="tipo"
+              [ngModel]="idTipoSel"
+              (ngModelChange)="idTipoSel = $event; onTipoChange()">
+        <option [value]="0">Seleccione</option>
+        @for (t of tipos; track t.id) {
+          <option [value]="t.id">{{ t.nombre }}</option>
+        }
+      </select>
+    </div>
 
-    <!-- MARCA -->
-    <label>Marca</label>
-    <select [(ngModel)]="marcaSeleccionada">
-      <option value="">Seleccione</option>
-      <option *ngFor="let m of marcasDisponibles" [value]="m">
-        {{ m }}
-      </option>
-    </select>
+    <!-- Paso 2: Fabricante -->
+    <div class="campo">
+      <label for="fabricante">2. Fabricante</label>
+      <select id="fabricante"
+              [ngModel]="idFabSel"
+              (ngModelChange)="idFabSel = $event; onFabricanteChange()"
+              [disabled]="!idTipoSel">
+        <option [value]="0">Seleccione</option>
+        @for (f of fabricantes; track f.id) {
+          <option [value]="f.id">{{ f.nombre }}</option>
+        }
+      </select>
+    </div>
 
-    <!-- MODELO -->
-    <label>Modelo</label>
-    <select [(ngModel)]="modeloSeleccionado">
-      <option value="">Seleccione</option>
-      <option *ngFor="let m of modelosDisponibles" [value]="m">
-        {{ m }}
-      </option>
-    </select>
+    <!-- Paso 3: Modelo -->
+    <div class="campo">
+      <label for="modelo">3. Modelo</label>
+      <select id="modelo"
+              [ngModel]="modeloSel"
+              (ngModelChange)="modeloSel = $event; onModeloChange()"
+              [disabled]="!idFabSel">
+        <option value="">Seleccione</option>
+        @for (m of modelos; track m) {
+          <option [value]="m">{{ m }}</option>
+        }
+      </select>
+    </div>
 
+    <!-- Paso 4: Año -->
+    <div class="campo">
+      <label for="anio">4. Año</label>
+      <select id="anio"
+              [ngModel]="anioSel"
+              (ngModelChange)="anioSel = $event; onAnioChange()"
+              [disabled]="!modeloSel">
+        <option [value]="0">Seleccione</option>
+        @for (a of anios; track a) {
+          <option [value]="a">{{ a }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Paso 5: Cilindraje -->
+    <div class="campo">
+      <label for="cilindrada">5. Cilindraje (cc)</label>
+      <select id="cilindrada"
+              [ngModel]="cilindradaSel"
+              (ngModelChange)="cilindradaSel = $event"
+              [disabled]="!anioSel">
+        <option [value]="0">Seleccione</option>
+        @for (c of cilindradas; track c) {
+          <option [value]="c">{{ c }} cc</option>
+        }
+      </select>
+    </div>
+
+    <button class="btn-buscar" [disabled]="!puedesBuscar" (click)="buscarFiltros()">
+      <i class="fas fa-search"></i> Buscar filtros
+    </button>
+    <button class="btn-limpiar" (click)="limpiarFiltros()">Limpiar</button>
   </aside>
 
-  <!-- 🟢 CONTENIDO -->
   <section class="contenido">
 
-    <h2>Resultados</h2>
+    @if (!buscado) {
+      <div class="estado-inicial">
+        <i class="fas fa-filter icono-estado"></i>
+        <p>Selecciona los datos de tu vehículo y presiona <strong>Buscar filtros</strong>.</p>
+      </div>
+    }
 
-    <p>Tipo: {{ tipoSeleccionado }}</p>
-    <p>Marca: {{ marcaSeleccionada }}</p>
-    <p>Modelo: {{ modeloSeleccionado }}</p>
+    @if (buscado && resultados.length === 0) {
+      <div class="estado-vacio">
+        <i class="fas fa-box-open icono-estado"></i>
+        <p>No se encontraron filtros para este vehículo con la marca seleccionada.</p>
+        <p class="estado-hint">Intenta con otra marca o revisa los datos del vehículo.</p>
+      </div>
+    }
+
+    @if (buscado && resultados.length > 0) {
+      <div class="resultados-header">
+        <p class="titulo-resultados">
+          {{ resultados.length }} filtro{{ resultados.length !== 1 ? 's' : '' }} encontrado{{ resultados.length !== 1 ? 's' : '' }}
+          para <strong>{{ modeloSel }} {{ anioSel }} — {{ cilindradaSel }} cc</strong>
+        </p>
+      </div>
+
+      <div class="grid-resultados">
+        @for (producto of resultados; track producto.id) {
+          <div class="resultado-card">
+
+            <div class="card-imagen">
+              <img [src]="producto.imagenUrl" [alt]="producto.nombre">
+            </div>
+
+            <div class="card-info">
+              <span class="tipo-tag" [ngClass]="tipoFiltroColor(producto)">
+                {{ tipoFiltroLabel(producto) }}
+              </span>
+              <p class="card-ref">{{ producto.referencia }}</p>
+              <h4 class="card-nombre">{{ producto.nombre }}</h4>
+              <p class="card-precio">${{ producto.precio.toLocaleString('es-CO') }}</p>
+            </div>
+
+            <div class="card-acciones">
+              <button class="btn-equiv" (click)="abrirModal(producto)">
+                <i class="fas fa-exchange-alt"></i> Ver equivalencias
+              </button>
+              <button
+                class="btn-carrito"
+                [class.agregado]="agregadoId === producto.id"
+                (click)="agregarAlCarrito(producto)">
+                {{ agregadoId === producto.id ? '✓ Agregado' : 'Agregar al carrito' }}
+              </button>
+            </div>
+
+          </div>
+        }
+      </div>
+    }
 
   </section>
-
 </div>
+
+<!-- MODAL DE EQUIVALENCIAS -->
+@if (modalAbierto && productoModal) {
+  <div class="modal-backdrop" (click)="cerrarModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h3>Equivalencias</h3>
+        <button class="modal-cerrar" (click)="cerrarModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-producto-ref">
+        <span class="tipo-tag" [ngClass]="tipoFiltroColor(productoModal)">
+          {{ tipoFiltroLabel(productoModal) }}
+        </span>
+        <strong>{{ productoModal.referencia }}</strong> — {{ productoModal.nombre }}
+      </div>
+
+      @if (equivalenciasModal.length === 0) {
+        <p class="modal-sin-equiv">Este producto no tiene equivalencias registradas.</p>
+      }
+
+      @if (equivalenciasModal.length > 0) {
+        <p class="modal-intro">Referencias compatibles con tu vehículo:</p>
+        <div class="modal-lista">
+          @for (eq of equivalenciasModal; track eq.referenciaEquiv) {
+            <div class="equiv-item">
+              <div class="equiv-info">
+                <span class="equiv-marca">{{ eq.nombreMarcaEquiv }}</span>
+                <span class="equiv-ref">{{ eq.referenciaEquiv }}</span>
+                @if (eq.notas) { <span class="equiv-nota">{{ eq.notas }}</span> }
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <button class="modal-btn-cerrar" (click)="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+}

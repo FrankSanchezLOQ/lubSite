@@ -1,23 +1,95 @@
 <section class="pasarela-container">
-  <h1>Pasarela de pago</h1>
-  <p>Completa los datos para finalizar tu compra.</p>
 
-  <form class="pasarela-form">
-    <label for="nombreTitular">Nombre del titular</label>
-    <input id="nombreTitular" name="nombreTitular" [(ngModel)]="nombreTitular" />
-
-    <label for="numeroTarjeta">Numero de tarjeta</label>
-    <input id="numeroTarjeta" name="numeroTarjeta" [(ngModel)]="numeroTarjeta" />
-
-    <label for="fechaVencimiento">Fecha de vencimiento (MM/AA)</label>
-    <input id="fechaVencimiento" name="fechaVencimiento" [(ngModel)]="fechaVencimiento" />
-
-    <label for="cvv">CVV</label>
-    <input id="cvv" name="cvv" [(ngModel)]="cvv" />
-
-    <div class="acciones">
-      <button type="button" routerLink="/carrito">Volver al carrito</button>
-      <button type="submit" class="btn-finalizar">Finalizar pago</button>
+  @if (pedidoConfirmado) {
+    <div class="confirmado">
+      <i class="fas fa-check-circle icono-ok"></i>
+      <h2>¡Pedido recibido!</h2>
+      <p>Nos pondremos en contacto contigo muy pronto para coordinar la entrega.</p>
+      <a class="btn-volver" routerLink="/productos">Seguir comprando</a>
     </div>
-  </form>
+  }
+
+  @if (!pedidoConfirmado) {
+    <h1>Confirmar pedido</h1>
+
+    <div class="seccion">
+      <h2 class="seccion-titulo">Resumen del pedido</h2>
+
+      @if (carritoService.isEmpty()) {
+        <p class="carrito-vacio">Tu carrito está vacío. <a routerLink="/productos">Ver productos</a></p>
+      }
+
+      @if (!carritoService.isEmpty()) {
+        <div class="lista-resumen">
+          @for (item of carritoService.items(); track item.producto.id + '-' + (item.presentacion?.id ?? 0)) {
+            <div class="resumen-item">
+              <img [src]="item.producto.imagenUrl" [alt]="item.producto.nombre">
+              <div class="resumen-info">
+                <!-- Muestra nombre + presentación -->
+                <span class="resumen-nombre">{{ carritoService.etiquetaItem(item) }}</span>
+                <span class="resumen-ref">
+                  Ref: {{ item.presentacion?.referencia ?? item.producto.referencia }}
+                </span>
+              </div>
+              <div class="resumen-calc">
+                <span class="resumen-cant">x{{ item.cantidad }}</span>
+                <!-- BUG FIX: precio real con presentación -->
+                <span class="resumen-precio">
+                  ${{ (carritoService.precioItem(item) * item.cantidad).toLocaleString('es-CO') }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="resumen-total">
+          <span>Total del pedido</span>
+          <strong>${{ carritoService.total().toLocaleString('es-CO') }}</strong>
+        </div>
+      }
+    </div>
+
+    @if (!carritoService.isEmpty()) {
+      <div class="seccion">
+        <h2 class="seccion-titulo">Datos de contacto</h2>
+        <p class="seccion-nota">
+          <i class="fas fa-lock"></i>
+          El pago se coordina directamente con nuestro equipo por WhatsApp o en tienda.
+          No recopilamos datos de tarjetas.
+        </p>
+
+        <div class="form-grid">
+          <div class="campo">
+            <label for="nombre">Nombre completo *</label>
+            <input id="nombre" type="text" [(ngModel)]="nombreContacto"
+                   placeholder="Tu nombre" name="nombre">
+          </div>
+          <div class="campo">
+            <label for="telefono">Teléfono / WhatsApp *</label>
+            <input id="telefono" type="tel" [(ngModel)]="telefono"
+                   placeholder="Ej: 3001234567" name="telefono">
+          </div>
+          <div class="campo campo-completo">
+            <label for="direccion">Dirección de entrega</label>
+            <input id="direccion" type="text" [(ngModel)]="direccionEnvio"
+                   placeholder="Opcional — si requieres domicilio" name="direccion">
+          </div>
+          <div class="campo campo-completo">
+            <label for="notas">Notas adicionales</label>
+            <textarea id="notas" [(ngModel)]="notas" rows="3"
+                      placeholder="Horario de entrega, referencias del lugar, etc."
+                      name="notas"></textarea>
+          </div>
+        </div>
+
+        <div class="acciones">
+          <a class="btn-volver" routerLink="/carrito">Volver al carrito</a>
+          <button class="btn-confirmar" [disabled]="!formularioValido" (click)="confirmarPedido()">
+            Confirmar pedido
+          </button>
+        </div>
+      </div>
+    }
+  }
+
 </section>

@@ -1,32 +1,27 @@
-/* HEADER */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 25px;
-  background: #7a7a7a;
+  padding: 12px 25px;
+  background: var(--color-secundario);
   color: white;
   position: sticky;
   top: 0;
   z-index: 1000;
-  font-family: 'Montserrat', system-ui, sans-serif;
+  font-family: var(--fuente-principal);
 }
 
-/* LOGO */
+/* Logo */
 .logo {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 20px;
-  font-weight: bold;
 }
-
 
 .logo img {
-  height: 80px; /* controla el tamaño del logo */
+  height: 70px;
   width: auto;
 }
-
 
 .logo span {
   color: #ffffff;
@@ -37,98 +32,112 @@
   white-space: nowrap;
 }
 
-
-/* AGRUPA NAV + ICONOS */
+/* Sección derecha */
 .right-section {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-/* NAV DESKTOP */
+/* Links de navegación */
 .nav-links {
   display: flex;
   align-items: center;
   gap: 25px;
 }
 
-/* LINKS */
 .nav-links a {
   text-decoration: none;
   color: white;
-  transition: 0.3s;
   font-size: 16px;
+  transition: color var(--transicion);
 }
 
-.nav-links a:hover {
-  color: #f5c518;
+.nav-links a:hover,
+.nav-links a.activo {
+  color: var(--color-primario);
 }
 
-/* ICONOS */
+/* Íconos */
 .icons {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 18px;
 }
 
-/* CARRITO */
+/* Carrito */
+.cart-link {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  position: relative;
+}
+
 .cart-icon {
   font-size: 20px;
-  cursor: pointer;
+  transition: color var(--transicion);
 }
 
-/* HAMBURGUESA */
+.cart-link:hover .cart-icon {
+  color: var(--color-primario);
+}
+
+/* Badge con conteo de items */
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: var(--color-primario);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* Hamburguesa — solo visible en móvil */
 .menu-icon {
   font-size: 22px;
   cursor: pointer;
   display: none;
 }
 
+/* Responsive — un solo bloque unificado */
 @media (max-width: 768px) {
+  .logo span {
+    display: none;
+  }
 
-  /* MOSTRAR ICONO HAMBURGUESA */
   .menu-icon {
     display: block;
   }
 
-  /* OCULTAR MENU POR DEFECTO */
   .nav-links {
     position: absolute;
-    top: 60px;
+    top: 94px; /* altura del header en móvil */
     right: 0;
-    background: #7a7a7a;
+    background: var(--color-secundario);
     flex-direction: column;
+    align-items: flex-start;
     width: 220px;
     padding: 20px;
     display: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   }
 
-  /* CUANDO ESTA ACTIVO */
   .nav-links.active {
     display: flex;
   }
 
-  /* ESPACIADO LINKS */
   .nav-links a {
     padding: 10px 0;
-  }
-}
-
-
-.cart-link {
-  display: flex;
-  align-items: center;
-  color: white;
-  text-decoration: none;
-}
-
-.cart-icon {
-  font-size: 20px;
-}
-
-@media (max-width: 768px) {
-  .logo span {
-    display: none;
+    width: 100%;
   }
 }

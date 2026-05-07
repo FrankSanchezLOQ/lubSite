@@ -1,18 +1,71 @@
 <section class="carrito-container">
-  <h1>Productos agregados al carrito</h1>
+  <h1>Carrito de compras</h1>
 
-  <div class="lista-productos">
-    <article class="item-carrito" *ngFor="let producto of productosAgregados">
-      <h3>{{ producto.nombre }}</h3>
-      <p>Cantidad: {{ producto.cantidad }}</p>
-      <p>Precio unitario: ${{ producto.precio }}</p>
-    </article>
-  </div>
+  @if (carritoService.isEmpty()) {
+    <div class="carrito-vacio">
+      <i class="fas fa-shopping-cart icono-vacio"></i>
+      <p>Tu carrito está vacío</p>
+      <a class="btn-seguir" routerLink="/productos">Ver productos</a>
+    </div>
+  }
 
-  <p class="total">Total: ${{ total }}</p>
+  @if (!carritoService.isEmpty()) {
+    <div class="lista-items">
+      @for (item of carritoService.items(); track item.producto.id + '-' + (item.presentacion?.id ?? 0)) {
+        <article class="item-carrito">
+          <img [src]="item.producto.imagenUrl" [alt]="item.producto.nombre">
 
-  <div class="acciones">
-    <button type="button" routerLink="/productos">Seguir comprando</button>
-    <button type="button" class="btn-pagar" routerLink="/pasarela">Ir a pasarela de pago</button>
-  </div>
+          <div class="item-info">
+            <!-- Muestra nombre + presentación si la hay -->
+            <h3>{{ carritoService.etiquetaItem(item) }}</h3>
+            <p class="item-ref">
+              Ref: {{ item.presentacion?.referencia ?? item.producto.referencia }}
+            </p>
+            <p class="item-precio-unit">
+              ${{ carritoService.precioItem(item).toLocaleString('es-CO') }} c/u
+            </p>
+          </div>
+
+          <div class="item-controles">
+            <!-- BUG FIX: firma correcta (idProducto, presentacionId, delta) -->
+            <button class="btn-cantidad"
+              (click)="carritoService.cambiarCantidad(item.producto.id, item.presentacion?.id ?? null, -1)"
+              aria-label="Reducir cantidad">−</button>
+            <span class="cantidad">{{ item.cantidad }}</span>
+            <button class="btn-cantidad"
+              (click)="carritoService.cambiarCantidad(item.producto.id, item.presentacion?.id ?? null, +1)"
+              aria-label="Aumentar cantidad">+</button>
+          </div>
+
+          <!-- BUG FIX: subtotal con precio real (incluye presentación) -->
+          <p class="item-subtotal">
+            ${{ (carritoService.precioItem(item) * item.cantidad).toLocaleString('es-CO') }}
+          </p>
+
+          <!-- BUG FIX: firma correcta (idProducto, presentacionId) -->
+          <button class="btn-eliminar"
+            (click)="carritoService.eliminar(item.producto.id, item.presentacion?.id ?? null)"
+            aria-label="Eliminar producto">
+            <i class="fas fa-trash"></i>
+          </button>
+        </article>
+      }
+    </div>
+
+    <div class="resumen">
+      <div class="resumen-linea">
+        <span>Subtotal ({{ carritoService.conteo() }} item{{ carritoService.conteo() !== 1 ? 's' : '' }})</span>
+        <span>${{ carritoService.total().toLocaleString('es-CO') }}</span>
+      </div>
+      <div class="resumen-linea total">
+        <span>Total</span>
+        <strong>${{ carritoService.total().toLocaleString('es-CO') }}</strong>
+      </div>
+    </div>
+
+    <div class="acciones">
+      <a class="btn-seguir" routerLink="/productos">Seguir comprando</a>
+      <a class="btn-pagar" routerLink="/pasarela">Confirmar pedido</a>
+    </div>
+  }
 </section>

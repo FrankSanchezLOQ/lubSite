@@ -1,54 +1,98 @@
 <div class="layout">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <h3>Filtros</h3>
+    <h3>Filtrar aceites</h3>
 
-    <label>Tipo</label>
-    <select [(ngModel)]="tipo" (change)="filtrarProductos()">
-      <option value="">Todos</option>
-      <option value="Moto">Moto</option>
-      <option value="Carro">Carro</option>
-    </select>
-
-    <label>Referencia</label>
-    <select [(ngModel)]="referencia" (change)="filtrarProductos()">
+    <label for="filtro-aplicacion">Aplicación</label>
+    <select id="filtro-aplicacion" [(ngModel)]="filtroAplicacion" (change)="filtrar()">
       <option value="">Todas</option>
-      <option *ngFor="let ref of referenciasDisponibles" [value]="ref">
-        {{ ref }}
-      </option>
+      <option value="Carro">Carro</option>
+      <option value="Moto">Moto</option>
+      <option value="Maquinaria">Maquinaria</option>
     </select>
 
-    <button (click)="limpiarFiltros()">Limpiar</button>
+    <label for="filtro-viscosidad">Viscosidad</label>
+    <select id="filtro-viscosidad" [(ngModel)]="filtroViscosidad" (change)="filtrar()">
+      <option value="">Todas</option>
+      @for (v of viscosidadesDisponibles; track v) {
+        <option [value]="v">{{ v }}</option>
+      }
+    </select>
+
+    <label for="filtro-base">Tipo de aceite</label>
+    <select id="filtro-base" [(ngModel)]="filtroBase" (change)="filtrar()">
+      <option value="">Todos</option>
+      <option value="Mineral">Mineral</option>
+      <option value="Semisintético">Semisintético</option>
+      <option value="Sintético">Sintético</option>
+    </select>
+
+    <button class="btn-limpiar" (click)="limpiarFiltros()">Limpiar filtros</button>
   </aside>
 
-  <!-- CONTENIDO -->
   <section class="contenido">
-
-    <p class="titulo">Aceites - {{ marca | titlecase }}</p>
-
+    <p class="titulo">Aceites — {{ marca | titlecase }}</p>
     <p class="resultados">
-      {{ productosFiltradosLista.length }} productos encontrados
+      {{ productosFiltrados.length }} producto{{ productosFiltrados.length !== 1 ? 's' : '' }} encontrado{{ productosFiltrados.length !== 1 ? 's' : '' }}
     </p>
 
-    <div *ngIf="productosFiltradosLista.length === 0" class="no-productos">
-      <p>No se encontraron productos</p>
-    </div>
-
-    <div *ngIf="productosFiltradosLista.length > 0" class="grid-productos">
-      <div *ngFor="let producto of productosFiltradosLista" class="producto-card">
-        
-        <img [src]="producto.imagen" [alt]="producto.nombre">
-
-        <h4>{{ producto.nombre }}</h4>
-        <p class="tipo">{{ producto.tipo }}</p>
-        <p class="ref">Ref: {{ producto.referencia }}</p>
-
-        <button class="btn">Ver detalles</button>
-
+    @if (productosFiltrados.length === 0) {
+      <div class="no-productos">
+        <p>No se encontraron productos con los filtros seleccionados.</p>
+        <button (click)="limpiarFiltros()">Ver todos</button>
       </div>
-    </div>
+    }
 
+    @if (productosFiltrados.length > 0) {
+      <div class="grid-productos">
+        @for (producto of productosFiltrados; track producto.id) {
+          <div class="producto-card">
+
+            <img [src]="producto.imagenUrl" [alt]="producto.nombre">
+            <h4>{{ producto.nombre }}</h4>
+            <p class="ref">Ref: {{ presentacionSeleccionada[producto.id]?.referencia ?? producto.referencia }}</p>
+
+            <div class="atributos">
+              @if (producto.aplicacion) { <span class="tag">{{ producto.aplicacion }}</span> }
+              @if (producto.viscosidad) { <span class="tag">{{ producto.viscosidad }}</span> }
+              @if (producto.tipoBase)   { <span class="tag tag-base">{{ producto.tipoBase }}</span> }
+            </div>
+
+            <!-- Selector de presentación vertical -->
+            @if (producto.presentaciones.length > 0) {
+              <div class="presentacion-selector">
+                <span class="presentacion-label">Selecciona presentación</span>
+                <ul class="pres-lista">
+                  @for (pres of producto.presentaciones; track pres.id) {
+                    <li
+                      class="pres-fila"
+                      [class.activa]="presentacionSeleccionada[producto.id]?.id === pres.id"
+                      (click)="presentacionSeleccionada[producto.id] = pres">
+                      <span class="pres-check">
+                        <i class="fas fa-check"></i>
+                      </span>
+                      <span class="pres-info">
+                        <span class="pres-nombre">{{ pres.nombre }}</span>
+                        <span class="pres-detalle">{{ pres.cantidad }} {{ pres.unidad }}</span>
+                      </span>
+                      <span class="pres-precio">${{ pres.precio.toLocaleString('es-CO') }}</span>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+
+            <button
+              class="btn-carrito"
+              [class.agregado]="agregadoId === producto.id"
+              (click)="agregarAlCarrito(producto)">
+              {{ agregadoId === producto.id ? '✓ Agregado' : 'Agregar al carrito' }}
+            </button>
+
+          </div>
+        }
+      </div>
+    }
   </section>
 
 </div>

@@ -1,0 +1,272 @@
+/* ── Carrusel hero ── */
+.carrusel-hero {
+  position: relative;
+  height: 520px;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide.activo { opacity: 1; }
+
+.slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.35) 100%);
+}
+
+.slide-content {
+  position: relative;
+  color: white;
+  text-align: center;
+  max-width: 700px;
+  padding: 0 24px;
+}
+
+.hero-tag {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-primario);
+  margin-bottom: 14px;
+}
+
+.slide-content h1 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.hero-sub {
+  font-size: 17px;
+  font-weight: 300;
+  opacity: 0.9;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.btn-hero {
+  display: inline-block;
+  padding: 13px 32px;
+  background: var(--color-primario);
+  color: white;
+  border-radius: var(--borde-radio-sm);
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color var(--transicion);
+}
+.btn-hero:hover { background: var(--color-primario-hover); }
+
+/* Controles del carrusel */
+.ctrl {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transicion);
+  z-index: 10;
+}
+.ctrl:hover { background: rgba(255, 255, 255, 0.4); }
+.ctrl-prev { left: 16px; }
+.ctrl-next { right: 16px; }
+
+/* Indicadores */
+.indicadores {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.indicador {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color var(--transicion);
+  padding: 0;
+}
+.indicador.activo { background: white; }
+
+/* ── Categorías ── */
+.categorias {
+  padding: 64px 20px;
+  background: var(--color-fondo-card);
+}
+
+.contenedor { max-width: 1100px; margin: 0 auto; }
+
+.categorias h2,
+.ventajas h2 {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.seccion-sub {
+  text-align: center;
+  color: var(--color-texto-suave);
+  font-size: 15px;
+  margin-bottom: 36px;
+}
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.cat-card {
+  background: var(--color-fondo);
+  border-radius: var(--borde-radio-lg);
+  padding: 28px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform var(--transicion), box-shadow var(--transicion), border-color var(--transicion);
+  border: 1px solid transparent;
+}
+.cat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sombra-card-hover);
+  border-color: var(--color-primario);
+}
+
+.cat-icono {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-primario);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cat-icono i { font-size: 24px; color: white; }
+
+.cat-card h3 { font-size: 16px; font-weight: 700; color: var(--color-texto); margin: 0; }
+.cat-card p  { font-size: 13px; color: var(--color-texto-suave); line-height: 1.5; margin: 0; }
+
+/* ── Ventajas ── */
+.ventajas { padding: 64px 20px; background: var(--color-fondo); }
+.ventajas h2 { margin-bottom: 36px; }
+
+.ventajas-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.ventaja { text-align: center; padding: 16px; }
+.ventaja i { font-size: 34px; color: var(--color-primario); margin-bottom: 12px; display: block; }
+.ventaja h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.ventaja p  { font-size: 13px; color: var(--color-texto-suave); line-height: 1.6; }
+
+/* ── CTA ── */
+.cta { background: var(--color-secundario); color: white; padding: 48px 20px; }
+.cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.cta h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.cta p  { font-size: 14px; opacity: 0.85; }
+
+.btn-cta {
+  display: inline-block;
+  padding: 12px 28px;
+  background: var(--color-primario);
+  color: white;
+  border-radius: var(--borde-radio-sm);
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background-color var(--transicion);
+  flex-shrink: 0;
+}
+.btn-cta:hover { background: var(--color-primario-hover); }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .cat-grid      { grid-template-columns: repeat(2, 1fr); }
+  .ventajas-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .carrusel-hero { height: 380px; }
+  .slide-content h1 { font-size: 26px; }
+  .hero-sub         { font-size: 14px; }
+  .cta-inner        { flex-direction: column; text-align: center; }
+  .btn-cta          { width: 100%; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .cat-grid      { grid-template-columns: 1fr; }
+  .ventajas-grid { grid-template-columns: 1fr; }
+  .carrusel-hero { height: 320px; }
+}
+
+/* ── Selector de presentaciones en cards de catálogo ── */
+.presentacion-selector { width: 100%; }
+
+.presentacion-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-texto-leve);
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.presentacion-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+}
+
+.pres-btn {
+  padding: 4px 10px;
+  border-radius: 10px;
+  border: 1.5px solid var(--color-borde);
+  background: transparent;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+  transition: all var(--transicion);
+}
+.pres-btn:hover  { border-color: var(--color-primario); color: var(--color-primario-hover); }
+.pres-btn.activa { border-color: var(--color-primario); background: var(--color-primario); color: white; }

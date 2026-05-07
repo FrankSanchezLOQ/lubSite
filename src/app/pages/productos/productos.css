@@ -1,216 +1,154 @@
-.hero {
-    height: 400px;
-
-    background-image: url("/header.png");
-    background-size: cover;
-    background-position: center;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    position: relative;
+/* ── Breadcrumb hero ── */
+.breadcrumb-hero {
+  background: var(--color-secundario);
+  color: white;
+  padding: 28px 32px;
 }
 
-.hero::before { /*Crea capa oscura sobre la imagen header */
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+.breadcrumb-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
 }
 
-.hero-content {
-    position: relative;
-    color: white;
-    text-align: center;
+.breadcrumb-hero h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
 }
 
-.hero-content h1 {
-    font-size: 40px;
-    font-weight: bold;
-    margin-bottom: 10px;
+/* Píldoras de categoría */
+.cat-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.hero-content p {
-    font-size: 24px;
-    font-weight: 300;
-    margin-bottom: 20px;
+.cat-pill {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transicion), border-color var(--transicion);
 }
 
-
-/*Botones*/
-.buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
+.cat-pill:hover {
+  background: var(--color-primario);
+  border-color: var(--color-primario);
 }
 
-.btn-primario {
-    background-color: #f5a623;
-    border: none;
-    padding: 12px 22px;
-    color: white;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 20px;
-    cursor: pointer;
+/* ── Secciones ── */
+.catalogos {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
 }
 
-    .btn-primario:hover {
-        background-color: #d4881c;
-    }
-
-.btn-secundario {
-    background: #6c6c6c;
-    border: none;
-    padding: 12px 22px;
-    color: white;
-    border-radius: 5px;
-    font-size: 20px;
-    cursor: pointer;
+.cat-section {
+  margin-bottom: 48px;
+  scroll-margin-top: 90px; /* compensa el header sticky */
 }
 
-    .btn-secundario:hover {
-        background-color: #5a5a5a;
-    }
-
-/*Estilos para las tarjetas de los productos*/
-.productos {
-    text-align: center;
-    padding: 50px 20px;
+.cat-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
 }
 
-    .productos h2 {
-        font-size: 30px;
-        margin-bottom: 40px;
-    }
-
-    .productos p {
-        font-size: 24px;
-        color: black;
-        margin-bottom: 50px;
-    }
-
-    .productos h3 {
-        font-size: 24px;
-        margin-bottom: 40px;
-    }
-
-.productos-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    max-width: 1000px;
-    margin: auto;
+.cat-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-texto);
 }
 
-.producto-card {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-    transition: 0.3s;
+.cat-count {
+  font-size: 13px;
+  color: var(--color-texto-leve);
 }
 
-    .producto-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .producto-card img {
-        width: 100%;
-        height: 150px;
-        object-fit: contain;
-    }
-
-    .producto-card button {
-        background: #f5a623;
-        border: none;
-        padding: 10px 18px;
-        color: white;
-        border-radius: 6px;
-        margin-top: 10px;
-        cursor: pointer;
-    }
-
-
-/*Responsive*/
-
-@media (max-width: 1024px) {
-
-  .hero h1 {
-    font-size: 40px;
-  }
-
-  .productos h2 {
-    font-size: 28px;
-  }
-
-  .producto-card img {
-    max-height: 110px;
-  }
+/* ── Carrusel horizontal ── */
+.carrusel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 10px;
+  /* Esconder scrollbar visualmente pero mantener funcionalidad */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-borde) transparent;
 }
 
+.carrusel::-webkit-scrollbar { height: 4px; }
+.carrusel::-webkit-scrollbar-track { background: transparent; }
+.carrusel::-webkit-scrollbar-thumb { background: var(--color-borde); border-radius: 2px; }
+
+/* ── Card de marca ── */
+.marca-card {
+  flex: 0 0 180px;         /* ancho fijo — no se encoge */
+  scroll-snap-align: start;
+  background: var(--color-fondo-card);
+  border-radius: var(--borde-radio-lg);
+  padding: 20px 16px;
+  box-shadow: var(--sombra-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  transition: transform var(--transicion), box-shadow var(--transicion);
+}
+
+.marca-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-card-hover);
+}
+
+.marca-card img {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+}
+
+/* Sin nombre bajo la imagen (punto 6) — solo imagen + botón */
+
+.marca-btn {
+  width: 100%;
+  padding: 8px;
+  background: var(--color-primario);
+  color: white;
+  border: none;
+  border-radius: var(--borde-radio-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transicion);
+  /* FIX punto 7: siempre al fondo */
+  margin-top: auto;
+}
+
+.marca-btn:hover { background: var(--color-primario-hover); }
+
+/* ── Responsive ── */
 @media (max-width: 768px) {
-
-  /* HERO */
-  .hero {
-    padding: 60px 15px;
-  }
-
-  .hero h1 {
-    font-size: 32px;
-    line-height: 1.2;
-  }
-
-  .hero p {
-    font-size: 14px;
-  }
-
-  .buttons {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .btn-primario,
-  .btn-secundario {
-    width: 100%;
-    max-width: 280px;
-    margin: auto;
-  }
-
-  /* PRODUCTOS */
-  .productos {
-    padding: 40px 15px;
-  }
-
-  .productos h2 {
-    font-size: 26px;
-  }
-
-  .productos-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-  }
-
-  .producto-card {
-    padding: 15px;
-  }
-
-  .producto-card img {
-    max-height: 90px;
-  }
+  .breadcrumb-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .breadcrumb-hero h1 { font-size: 18px; }
+  .marca-card { flex: 0 0 140px; }
 }
+
 @media (max-width: 480px) {
-
-  .hero h1 {
-    font-size: 28px;
-  }
-
-  .productos-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .producto-card img {
-    max-height: 80px;
-  }
+  .marca-card { flex: 0 0 120px; padding: 14px 10px; }
+  .marca-card img { height: 70px; }
 }

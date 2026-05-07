@@ -1,10 +1,15 @@
-<div>
-  <app-catalogo-aceites
-    *ngIf="categoria === 'aceites'"
-    [marca]="marca">
-  </app-catalogo-aceites>
+@if (categoria === 'aceites') {
+  <app-catalogo-aceites [marca]="marca" />
+}
 
-  <app-catalogo-filtros
-    *ngIf="categoria === 'filtros'">
-  </app-catalogo-filtros>
-</div>
+@if (categoria === 'filtros') {
+  <app-catalogo-filtros [marca]="marca" />
+}
+
+@if (categoria === 'grasas') {
+  <app-catalogo-grasas [marca]="marca" />
+}
+
+@if (categoria === 'aditivos') {
+  <app-catalogo-aditivos [marca]="marca" />
+}

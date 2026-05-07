@@ -1,23 +1,19 @@
-import { Component } from '@angular/core';
-import { CatalogoAceites } from "../../catalogos/catalogo-aceites/catalogo-aceites";
-import { CatalogoFiltros } from "../../catalogos/catalogo-filtros/catalogo-filtros";
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CatalogoAceites }   from '../../catalogos/catalogo-aceites/catalogo-aceites';
+import { CatalogoFiltros }   from '../../catalogos/catalogo-filtros/catalogo-filtros';
+import { CatalogoGrasas }    from '../../catalogos/catalogo-grasas/catalogo-grasas';
+import { CatalogoAditivos }  from '../../catalogos/catalogo-aditivos/catalogo-aditivos';
 
 @Component({
   selector: 'app-catalogo',
-  imports: [CatalogoAceites, CatalogoFiltros, CommonModule],
+  imports: [CatalogoAceites, CatalogoFiltros, CatalogoGrasas, CatalogoAditivos],
   templateUrl: './catalogo.html',
   styleUrl: './catalogo.css',
 })
 export class Catalogo {
+  private route = inject(ActivatedRoute);
 
-  categoria: string = '';
-  marca: string = '';
-
-  constructor(private route: ActivatedRoute) {
-    this.categoria = this.route.snapshot.params['categoria'];
-    this.marca = this.route.snapshot.params['marca'];
-  }
-  
+  readonly categoria = this.route.snapshot.params['categoria'] as string;
+  readonly marca     = this.route.snapshot.params['marca']     as string;
 }

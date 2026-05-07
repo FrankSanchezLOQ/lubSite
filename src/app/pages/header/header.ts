@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-header',
@@ -9,20 +9,21 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.css',
 })
 export class Header {
-  menuAbierto: boolean = false;
+  carritoService = inject(CarritoService);
 
-  toggleMenu() {
+  menuAbierto = false;
+
+  toggleMenu(): void {
     this.menuAbierto = !this.menuAbierto;
   }
 
-  cerrarMenu() {
+  cerrarMenu(): void {
     this.menuAbierto = false;
   }
 
   @HostListener('window:click', ['$event'])
-  clickFuera(event: Event) {
+  clickFuera(event: Event): void {
     const target = event.target as HTMLElement;
-
     if (!target.closest('.navbar')) {
       this.menuAbierto = false;
     }

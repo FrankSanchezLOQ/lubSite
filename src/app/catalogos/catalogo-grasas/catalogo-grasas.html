@@ -1,0 +1,44 @@
+<div class="layout">
+
+  <aside class="sidebar">
+    <h3>Grasas — {{ marca | titlecase }}</h3>
+
+    <label for="filtro-nombre">Buscar por nombre o referencia</label>
+    <input id="filtro-nombre" type="text" [(ngModel)]="filtroNombre"
+           (input)="filtrar()" placeholder="Ej: EP2, multipropósito...">
+
+    <button class="btn-limpiar" (click)="limpiarFiltros()">Limpiar</button>
+  </aside>
+
+  <section class="contenido">
+    <p class="titulo">Grasas — {{ marca | titlecase }}</p>
+    <p class="resultados">{{ productosFiltrados.length }} producto{{ productosFiltrados.length !== 1 ? 's' : '' }} encontrado{{ productosFiltrados.length !== 1 ? 's' : '' }}</p>
+
+    @if (productosFiltrados.length === 0) {
+      <div class="no-productos">
+        <p>No se encontraron productos con ese criterio.</p>
+        <button (click)="limpiarFiltros()">Ver todos</button>
+      </div>
+    }
+
+    @if (productosFiltrados.length > 0) {
+      <div class="grid-productos">
+        @for (producto of productosFiltrados; track producto.id) {
+          <div class="producto-card">
+            <img [src]="producto.imagenUrl" [alt]="producto.nombre">
+            <h4>{{ producto.nombre }}</h4>
+            <p class="ref">Ref: {{ producto.referencia }}</p>
+            <p class="precio">${{ producto.precio.toLocaleString('es-CO') }}</p>
+            <button
+              class="btn-carrito"
+              [class.agregado]="agregadoId === producto.id"
+              (click)="agregarAlCarrito(producto)">
+              {{ agregadoId === producto.id ? '✓ Agregado' : 'Agregar al carrito' }}
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+</div>
